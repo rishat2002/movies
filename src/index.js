@@ -1,11 +1,8 @@
-import React,{Component} from 'react';
+/* eslint-disable */
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './components/app/app'
+import App from './components/app';
 
-const el = (
- <App />)
-ReactDOM.render(el,document.getElementById('root'));
-
-
-
+const el = <App />;
+ReactDOM.render(el, document.getElementById('root'));
