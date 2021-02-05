@@ -4,8 +4,6 @@ import Search from '../search';
 import MovieService from '../../movie-service/movie-service';
 import { SessionProvider } from '../session/session';
 
-
-
 class App extends Component {
   state = {
    rated :false,

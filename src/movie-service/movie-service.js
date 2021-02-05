@@ -13,6 +13,7 @@ class MovieService {
     return res.json();
   }
 /* eslint-disable */
+
   async getSearch(movieName, pageNumber) { 
     if (movieName === '') {
       return;
@@ -38,10 +39,12 @@ class MovieService {
     );
    return res 
   }
+
   async getGenres() {
   const res = await this.getResource(`/genre/movie/list?api_key=${this.api}&language=en-US`)
   return res
   }
+
   async getSessionId() {
     const session = await this.getResource(`/authentication/guest_session/new?api_key=${this.api}`)
     return session.guest_session_id
