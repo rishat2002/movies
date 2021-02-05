@@ -56,8 +56,8 @@ class Card extends Component {
   const {id} = cardInfo
   if (value!==0 && typeof value !== "undefined") {
     this.serv.postRate(id,this.sessionId,{value})
-  }
-}
+    }
+   }
   }
   
   handleChange = value => {
