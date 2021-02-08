@@ -16,7 +16,7 @@ class MovieService {
     if (movieName === '') {
       return;
     }
-    const res = await this.getResource(`/search//movie?api_key=${this.api}&query=${movieName}&page=${pageNumber}`);
+    const res = await this.getResource(`/search/movie?api_key=${this.api}&query=${movieName}&page=${pageNumber}`);
     const massData = await res.results.map((item) => {
       return {
         id: item.id,

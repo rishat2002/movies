@@ -111,7 +111,6 @@ class Search extends Component {
       filmNotFoundComponent = <Alert message="Поиск не дал результатов" type="info" className="filmNotFound" />;
       errorComponent = null;
     }
-    console.log(pagination)
     let paginationComponent =
       !load && pagination && !filmNotFound ? (
         <div style={{ display: 'flex', justifyContent: 'center' }}>
