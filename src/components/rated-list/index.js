@@ -1,3 +1,3 @@
-import RatedList from './ratedList'
+import RatedList from './ratedList';
 
-export default RatedList
+export default RatedList;

@@ -12,17 +12,17 @@ class SearchPanel extends Component {
       this.setState({ value: event.target.value });
       updateSearchString(event.target.value);
     };
-    const {value} = this.state
-    return <input className="main__search-panel" placeholder="Type to search..." value={value} onChange={input} />
+    const { value } = this.state;
+    return <input className="main__search-panel" placeholder="Type to search..." value={value} onChange={input} />;
   }
 }
 
 export default SearchPanel;
 
 SearchPanel.propTypes = {
-  updateSearchString:PropTypes.func
-}
+  updateSearchString: PropTypes.func,
+};
 
 SearchPanel.defaultProps = {
-  updateSearchString:()=>{}
-}
+  updateSearchString: () => {},
+};
