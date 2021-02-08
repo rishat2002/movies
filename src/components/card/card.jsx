@@ -87,7 +87,7 @@ class Card extends Component {
           this.sessionId = sessionId;
           return (
             <li className="main__card card" key={id} id={id}>
-              <img className="card__img" src={url} alt="poster not found" />
+              <div className="card__img" style={{backgroundImage:`url(${url})`,backgroundSize:'cover'}} />
               <div className="info">
                 <span className="card__title">{title}</span>
                 <span className="card__rate" style={borderStyle}>

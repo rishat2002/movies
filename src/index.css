@@ -86,8 +86,6 @@ li {
   width: 60px;
   height: 90px;
   grid-row: 1/4;
-  padding-bottom: 10px;
-  max-height: 120px;
 }
 
 .info {
@@ -208,7 +206,7 @@ li {
     grid-column: 1 / 2;
     padding: 0px;
     max-width: 185px;
-    max-height: 500px;
+    max-height: auto;
   }
 
   .card__date {
