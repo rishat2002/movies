@@ -5,10 +5,10 @@ import * as _ from 'lodash';
 import SearchPanel from '../search-panel';
 import 'antd/dist/antd.css';
 import CardList from '../card-list';
-import MovieService from '../../movie-service/movie-service';
+import CreateMovieRequests from '../../movie-service/create-movie-requests';
 
 class Search extends Component {
-  servData = new MovieService();
+  servData = new CreateMovieRequests();
 
   errorName = null;
 
@@ -81,25 +81,23 @@ class Search extends Component {
           cardList: res.map((item) => {
             return {
               title: item.title,
-              genreList: ['action', 'drama'],
               text: item.text,
               poster: item.poster,
-              releazeDate: item.date,
+              date: item.date,
               id: item.id,
+              genreId:item.genreId,
+              voteAverage:item.voteAverage
             };
           }),
         });
       })
       .catch(this.showError);
   }
-  /* eslint-enable */
 
-  render() {
-    const { error, load, cardList, filmNotFound, pagination, current, pageCount } = this.state;
-    let errorComponent = error ? <Alert message="Error" description={this.errorName} type="error" showIcon /> : null;
+  spinOrCardList () {
     let content = null;
-    let filmNotFoundComponent = null;
     const { addRatedCard } = this.props;
+    const { error, load, cardList, filmNotFound } = this.state;
     if (!filmNotFound) {
       if (load && !error) {
         content = <Spin size="large" className="spin" />;
@@ -107,6 +105,14 @@ class Search extends Component {
         content = <CardList list={cardList} addRatedCard={addRatedCard} />;
       }
     }
+    return content
+  }
+  /* eslint-enable */
+
+  render() {
+    const { error, load, filmNotFound, pagination, current, pageCount } = this.state;
+    let errorComponent = error ? <Alert message="Error" description={this.errorName} type="error" showIcon /> : null;
+    let filmNotFoundComponent = null;
     if (filmNotFound) {
       filmNotFoundComponent = <Alert message="Поиск не дал результатов" type="info" className="filmNotFound" />;
       errorComponent = null;
@@ -132,7 +138,7 @@ class Search extends Component {
         <section className="main__content">
           <SearchPanel updateSearchString={this.updateSearchString} />
           {filmNotFoundComponent}
-          {content}
+          {this.spinOrCardList()}
           {errorComponent}
           {paginationComponent}
         </section>

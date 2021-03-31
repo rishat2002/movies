@@ -3,21 +3,27 @@ import React, { Component } from 'react';
 import { Pagination } from 'antd';
 import 'antd/dist/antd.css';
 import CardList from '../card-list';
+import CreateMovieRequests from '../../movie-service/create-movie-requests';
 
 class RatedList extends Component {
+
+  serv = new CreateMovieRequests()
+
   state = {
     current: 1,
     ratedList: [],
   };
 
   componentDidMount() {
-    const { ratedList } = this.props;
-    this.setState({ ratedList });
+    // eslint-disable-next-line react/prop-types,react/destructuring-assignment
+      this.serv.getRatedList(this.props.sessionId).then(res => {
+        this.setState({ratedList:res})
+      })
   }
 
   onChange = (page) => {
     this.setState({
-      current: page,
+      current: page
     });
   };
 

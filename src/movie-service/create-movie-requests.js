@@ -1,4 +1,4 @@
-class MovieService {
+class CreateMovieRequests {
   apiBase = 'https://api.themoviedb.org/3';
 
   api = `f6e61c65bcf3a91240c438d369606e19`;
@@ -25,10 +25,13 @@ class MovieService {
         poster: item.poster_path,
         date: item.release_date,
         pageCount: res.total_pages,
+        genreId:item.genre_ids,
+        voteAverage:item.vote_average
       };
     });
     return massData;
   }
+
   async getFilmInfo(id) {
     const res = await this.getResource(`/movie/${id}?api_key=${this.api}`);
     return res;
@@ -55,6 +58,8 @@ class MovieService {
         releazeDate: item.release_date,
         pageCount: res.total_pages,
         rating: item.rating,
+        genreId: item.genre_ids,
+        voteAverage:item.vote_average
       };
     });
     return massData;
@@ -76,4 +81,5 @@ class MovieService {
   /* eslint-enable */
 }
 
-export default MovieService;
+export default CreateMovieRequests;
+

@@ -1,39 +1,56 @@
 import React, { Component } from 'react';
+import { Spin} from 'antd';
 import RatedList from '../rated-list';
 import Search from '../search';
-import MovieService from '../../movie-service/movie-service';
+import CreateMovieRequests from '../../movie-service/create-movie-requests';
 import { SessionProvider } from '../session/session';
+import 'antd/dist/antd.css';
 
 class App extends Component {
   state = {
     rated: false,
-    sessionId: 1,
+    load:false,
+    genresList:[]
   };
 
-  serv = new MovieService();
+  serv = new CreateMovieRequests();
 
-  constructor() {
-    super();
+
+  componentDidMount() {
     this.serv.getSessionId().then((res) => {
       this.setState({ sessionId: res });
     });
+   this.serv.getGenres().then ((res)=> {
+     this.setState({genresList:res})
+   })
   }
-  /* eslint-disable */
 
-  /* eslint-enable */
-  render() {
+  ratedHandler = () =>{
+    const {sessionId} = this.state
+    this.setState({load:true})
+    new CreateMovieRequests().getRatedList(sessionId).then((res) => {
+      this.setState({ ratedList: res, rated: true,load:false });
+    });
+  }
+
+  activeButton = () => {
     let searchBorderText = null;
     let ratedBorderText = null;
-    const { rated, ratedList, sessionId } = this.state;
+    const { rated} = this.state;
     if (rated) {
       ratedBorderText = { borderBottom: '2px solid #1890FF', color: '#1890FF' };
     } else {
       searchBorderText = { borderBottom: '2px solid #1890FF', color: '#1890FF' };
     }
-    const el = rated ? <RatedList ratedList={ratedList} /> : <Search addRatedCard={this.addRatedCard} />;
+    return {searchBorderText,ratedBorderText}
+  }
 
+  render() {
+    const {  rated,ratedList, genresList,load,sessionId } = this.state;
+    const el = rated ? <RatedList ratedList={ratedList} sessionId={sessionId}/> : <Search addRatedCard={this.addRatedCard} />;
+    const {searchBorderText,ratedBorderText} = this.activeButton()
     return (
-      <SessionProvider value={sessionId}>
+      <SessionProvider value={{genresList,sessionId}}>
         <div className="main">
           <div className="buttons">
             <button
@@ -49,16 +66,13 @@ class App extends Component {
             <button
               type="button"
               className="ratedButton"
-              onClick={() => {
-                new MovieService().getRatedList(sessionId).then((res) => {
-                  this.setState({ ratedList: res, rated: true });
-                });
-              }}
+              onClick={this.ratedHandler}
               style={ratedBorderText}
             >
               Rated
             </button>
           </div>
+          {load?<Spin size="large" className="spin" />:null}
           {el}
         </div>
       </SessionProvider>
